@@ -1,0 +1,98 @@
+
+@if (WrongCredentials) {	
+<span class="text-danger position-absolute top-10 start-50 translate-middle-x mt-3">
+  Wrong Credentials
+</span>
+}
+@else {
+      <div></div>
+} 
+
+
+	<div class="login-page d-flex justify-content-center align-items-center">
+
+	
+
+	<div class="card shadow mt-5 p-4" style="width: 400px;">
+
+		<h2 class="text-center mb-4">Login</h2>
+
+		<form>
+
+		<!-- Username -->
+		<div class="form-floating mb-4">
+			<input
+			type="text"
+			class="form-control"
+			id="username"
+			name="username"
+			[(ngModel)]="username"
+			placeholder="Username">
+
+			<label for="username">Username</label>
+		</div>
+
+
+		<!-- Password -->
+		<div class="form-floating mb-4">
+			<input
+			type="password"
+			class="form-control"
+			id="password"
+			name="password"
+			[(ngModel)]="password"
+			placeholder="Password">
+
+			<label for="password">Password</label>
+		</div>
+
+
+		<!-- Remember + Forgot -->
+		<div class="row mb-4">
+
+			<div class="col d-flex justify-content-center">
+			<div class="form-check">
+				<input
+				class="form-check-input"
+				type="checkbox"
+				id="remember">
+
+				<label class="form-check-label" for="remember">
+				Remember me
+				</label>
+			</div>
+			</div>
+
+			<div class="col text-end">
+			<a href="#" class="text-decoration-none">
+				Forgot password?
+			</a>
+			</div>
+
+		</div>
+
+
+		<!-- Buttons -->
+		<div class="d-flex gap-2">
+
+			<button
+			type="submit"
+			(click)="HandleLogin()"
+			class="btn btn-primary flex-fill">
+			Sign in
+			</button>
+
+			<button
+			type="button"
+			routerLink="/register"
+			class="btn btn-secondary flex-fill">
+			Register
+			</button>
+
+		</div>
+
+		</form>
+
+	</div>
+
+	</div>
