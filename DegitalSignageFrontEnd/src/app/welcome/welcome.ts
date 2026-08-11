@@ -8,6 +8,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './welcome.css',
 })
 export class WelcomeComponent {
-  appName: string = 'AkDegitalSinage';
+  appName: string = 'Degital Signage by Ahmed Ktari';
   
 }

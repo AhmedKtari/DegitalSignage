@@ -10,23 +10,28 @@ import { Component } from '@angular/core';
 export class RegisterComponent {
   WrongPasswordMatching : boolean = false;
   name: string = '';
-HandleRegister() {
+  async HandleRegister() {
   console.log('Register button clicked');
-  const name = (document.getElementById('name') as HTMLInputElement).value;
-  const familyName = (document.getElementById('familyname') as HTMLInputElement).value;
+  const name = (document.getElementById('username') as HTMLInputElement).value;
   const email = (document.getElementById('email') as HTMLInputElement).value;
   const password = (document.getElementById('password') as HTMLInputElement).value;
   const confirmPassword = (document.getElementById('confirmpassword') as HTMLInputElement).value;
   
-  if (password !== confirmPassword) {
-    console.error('Passwords do not match');
-    this.WrongPasswordMatching = true;
-    return;
+  if (password != confirmPassword) {
+    console.log('Passwords do not match');
+    
   }
-  console.log('Name:', name);
-  console.log('Family Name:', familyName);
-  console.log('Email:', email);
-  console.log('Password:', password);
+  
 
+  const response = await fetch('http://localhost:8080/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' 
+                
+    },
+    body: JSON.stringify({ usernameRequest: name, emailRequest: email, passwordRequest: password }) // ← this is the data going TO the backend
+  });
+
+  const message = await response.text();
+  alert(message);
 }
 }
