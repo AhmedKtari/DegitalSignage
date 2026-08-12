@@ -21,7 +21,7 @@ public class RegisterController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         User newUser = User.builder()
-                        .username(request.getUsernameRequest().toString())
+                        .username(request.getUsernameRequest())
                         .email(request.getEmailRequest())
                         .password(request.getPasswordRequest())
                         .role(Roles.client)

@@ -6,7 +6,7 @@ import { WelcomeComponent } from './welcome/welcome';
 import { profileComponent } from './profile/profile';
 
 import { ErrorComponent } from './error/error';
-import { LoggoutComponent } from './loggout/loggout';
+import { LogoutComponent } from './logout/logout';
 import { RouteGuard } from './Services/route-guard';
 
 
@@ -16,8 +16,8 @@ export const routes: Routes = [
         component: LoginComponent,
     },
     {
-        path : 'loggout',
-        component :LoggoutComponent,
+        path : 'logout',
+        component :LogoutComponent,
         canActivate: [RouteGuard]
 
     },

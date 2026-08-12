@@ -1,37 +1,36 @@
 import { Service, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
 @Service()
+
 export class Authservice {
     private platformId = inject(PLATFORM_ID);
-
+    public  originalusername: string | null = null;
+    private cookieService = inject(SsrCookieService);
     authenticate(username: string, password: string): boolean {
-        
-        if (username != '' && password != "") {
-            if (isPlatformBrowser(this.platformId)) {
-                sessionStorage.setItem("authenticatedUser", username);
-            }
-            return true;    
-        }
-        return false;
+    if (username != '' && password != '') {
+      this.cookieService.set('authenticatedUser', username, { path: '/' });
+      return true;
     }
+    return false;
+  }
 
     isLoggedIn(): boolean {
-        if (!isPlatformBrowser(this.platformId)) {
-            return false; // no session available during server render
-        }
-        let user = sessionStorage.getItem("authenticatedUser");
-        return user != null; 
-    }
+    return this.cookieService.check('authenticatedUser');
+  }
+
     logout(): void {
-        if (isPlatformBrowser(this.platformId)) {
-            sessionStorage.removeItem("authenticatedUser");
-        }
-    }
+    this.cookieService.delete('authenticatedUser', '/');
+  }
+
     getAuthenticatedUser(): string | null {
-        if (!isPlatformBrowser(this.platformId)) {
-            return null; // no session available during server render
-        }
-        return sessionStorage.getItem("authenticatedUser");
+    return this.cookieService.get('authenticatedUser') || null;
+  }
+
+    refreshPage(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.location.reload();
     }
-}
+  }
+} 

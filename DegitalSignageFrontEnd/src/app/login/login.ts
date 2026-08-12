@@ -17,20 +17,29 @@ export class LoginComponent {
   WrongCredentials = false;
   username: string = '';
   password: string = '';
-  authService: Authservice = new Authservice;
-  constructor(private router: Router) {
-     this.authService
+  constructor(private router: Router ,
+              private authentservice : Authservice
+  ) {
+      }
+  async HandleLogin() {
+  const response = await fetch('http://localhost:8080/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' 
+                
+    },
+    body: JSON.stringify({ usernameRequest: this.username, passwordRequest: this.password }) // ← this is the data going TO the backend
+  });
 
+  const data = await response.json();
+  if (response.ok) {
+    this.authentservice.authenticate(this.username, this.password);
+    
+    this.router.navigate(['/profile/' + String(data.username)]);
+    
+    
   }
-  HandleLogin() {
-  this.WrongCredentials = false;
-  if ( !this.authService.authenticate(this.username , this.password ) ) {
-        
-        this.WrongCredentials = true;
-      return;
-      
-  } 
-  this.router.navigate(['/profile/' + this.username]);
+    
+  
 } 
 
 }

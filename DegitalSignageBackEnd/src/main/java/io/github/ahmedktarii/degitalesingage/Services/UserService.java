@@ -18,4 +18,11 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+    public Boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+    public String grapPasswordByUsername(String username){
+        User user = userRepository.findByUsername(username);
+        return user != null ? user.getPassword() : null;
+    }
 }
