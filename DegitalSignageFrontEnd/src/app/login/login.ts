@@ -17,11 +17,17 @@ export class LoginComponent {
   WrongCredentials = false;
   username: string = '';
   password: string = '';
+  ErrorType: string = '';
   constructor(private router: Router ,
               private authentservice : Authservice
   ) {
-      }
+}
   async HandleLogin() {
+    if(this.username == '' || this.password == ''){
+      this.WrongCredentials = true;
+      this.ErrorType = "Please fill in all fields";
+      return;
+    }
   const response = await fetch('http://localhost:8080/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' 
@@ -37,6 +43,10 @@ export class LoginComponent {
     this.router.navigate(['/profile/' + String(data.username)]);
     
     
+  }
+  else {
+    this.WrongCredentials = true;
+    this.ErrorType = String(data.message); // ← this is the data coming FROM the backend
   }
     
   

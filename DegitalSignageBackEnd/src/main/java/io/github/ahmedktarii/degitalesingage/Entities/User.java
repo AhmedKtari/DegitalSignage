@@ -28,8 +28,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Roles role;
     @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime created_at;
+    @Column(name = "created_at" ,updatable = false)
+    private LocalDateTime createdAt;
 
 
 

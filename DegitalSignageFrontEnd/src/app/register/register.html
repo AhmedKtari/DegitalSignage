@@ -1,3 +1,13 @@
+@if (WrongCredentials) {	
+<span class="text-danger position-absolute top-10 start-50 translate-middle-x mt-3">
+  {{ErrorType}}
+</span>
+}
+@else {
+      <div></div>
+} 
+
+
 <form action="" method="post" class="login-form"> 
   	<div class="login-page d-flex justify-content-center align-items-center">
 	<div class="card shadow mt-5 p-4" style="width: 400px;">
@@ -9,15 +19,13 @@
     <label for="email">Email:</label>
       <input type="email" name="email" id="email">
     <label for="password">Password:</label>
-      <input type="password" name="password" id="password">
+      <input type="password" name="password" id="password" required> 
     <label for="confirmpassword">Confirm password:</label>
-      <input type="password" name="confirmpassword" id="confirmpassword"> <br>
-    <button type="submit" class="btn btn-primary" (click)="HandleRegister()">Register</button>
+      <input type="password" name="confirmpassword" id="confirmpassword" required> 
+    <button type="button" class="btn btn-primary" (click)="HandleRegister()">Register</button>
   </div>
     </div>
 
 </form>
 
-@if (WrongPasswordMatching){
-  <small >Passwords do not match</small>
-}
+

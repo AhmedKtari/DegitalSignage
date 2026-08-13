@@ -60,6 +60,7 @@ build/
 # IDEs
 # ==========================
 .idea/
+DegitalSignageFrontEnd/OpenInVSCode.exe.lnk
 *.iws
 *.iml
 *.ipr

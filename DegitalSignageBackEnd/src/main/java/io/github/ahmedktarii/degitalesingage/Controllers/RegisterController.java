@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -16,18 +17,27 @@ import java.time.LocalDateTime;
 public class RegisterController {   
 
     @Autowired
-    private UserService userService;
+    public UserService userService;
 
     @PostMapping("/register")
+
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+
+        if (!userService.doesEmailExist(request.getEmailRequest()) ) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Email already in use"));
+        }
+
+
         User newUser = User.builder()
                         .username(request.getUsernameRequest())
                         .email(request.getEmailRequest())
                         .password(request.getPasswordRequest())
                         .role(Roles.client)
-                        .created_at(LocalDateTime.now())
+                        .createdAt(LocalDateTime.now())
                         .build();
         userService.save(newUser);
         return ResponseEntity.ok("User registered successfully");
     }
+
+
 }
