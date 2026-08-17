@@ -10,6 +10,7 @@ import { Authservice } from '../Services/authservice';
 })
 export class MenuComponent {
   appName: string = 'MyApp';
+  username: string | null = null;
   isMenuOpen = false;
   LogginStatuts: boolean = false;
   
@@ -32,12 +33,10 @@ export class MenuComponent {
   }
     navigateToProfile() {
       console.log('Navigating to profile...');
-      const username = this.authentservice.getAuthenticatedUser();  
-      if (username) {
-        this.router.navigate(['/profile/', username]);
-      } else {
-        console.error('No authenticated user found in session storage.');
-      }
+      this.username = this.authentservice.getAuthenticatedUser() 
+      alert('Navigating to profile for user: ' + this.username);
+      this.router.navigate(['/profile/', this.username]);
+      
       
   }
      

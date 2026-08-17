@@ -5,12 +5,16 @@ import { WelcomeComponent } from './welcome/welcome';
 import { RegisterComponent } from './register/register';
 import { FooterComponent} from './footer/footer'
 import { MenuComponent} from './menu/menu'
+import { ManagingSignsComponent } from './managing-signs/managing-signs';
   
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [LoginComponent, WelcomeComponent, RegisterComponent, 
-              RouterOutlet , FooterComponent , MenuComponent], 
+              RouterOutlet , FooterComponent , MenuComponent ,
+              ManagingSignsComponent
+            
+            ], 
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })

@@ -2,36 +2,43 @@ package io.github.ahmedktarii.degitalesingage.Entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 
 @Entity
-@Table(name = "media")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Media {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false, length = 255)
     private String url;
+    @Column(name = "media_public_id")
+    private String mediaPublicId;
 
     // "image" or "video"
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 5)
     private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uploaded_by", nullable = false)
-    private User uploadedBy;
 
-    @Column(name = "created_at", updatable = false)
-    private Timestamp createdAt;
+    @JoinColumn(name = "uploaded_by", nullable = false)
+    private long uploadedBy;
+
+    @Column(name = "created_at" ,updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column()
+    private long size;
+
+    @Column
+    private String ownerCode;
 }

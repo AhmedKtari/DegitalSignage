@@ -23,7 +23,7 @@ public class RegisterController {
 
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 
-        if (!userService.doesEmailExist(request.getEmailRequest()) ) {
+        if (userService.doesEmailExist(request.getEmailRequest()) ) {
             return ResponseEntity.badRequest().body(Map.of("message", "Email already in use"));
         }
 
@@ -36,7 +36,15 @@ public class RegisterController {
                         .createdAt(LocalDateTime.now())
                         .build();
         userService.save(newUser);
-        return ResponseEntity.ok("User registered successfully");
+        newUser.setUserCode("U" + String.format("%02d", newUser.getId()));
+        userService.save(newUser);
+        return ResponseEntity.ok(Map.of(
+                "message", "login successful",
+                "username", newUser.getUsername(),
+                "email", newUser.getEmail()
+        ));
+
+
     }
 
 

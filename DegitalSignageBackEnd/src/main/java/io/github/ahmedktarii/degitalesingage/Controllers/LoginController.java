@@ -19,19 +19,20 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request ) {
-        if (!userService.existsByUsername(request.getUsernameRequest()) )
+        if (!userService.doesEmailExist(request.getEmailRequest()) )
         {
             return ResponseEntity.badRequest().body(Map.of("message", "user doesn't exist"));
         }
-        if(!((Objects.equals(userService.grapPasswordByUsername(request.getUsernameRequest()), request.getPasswordRequest())))){
+        if(!((Objects.equals(userService.grapPasswordByEmail(request.getEmailRequest()), request.getPasswordRequest())))){
             return ResponseEntity.badRequest().body(Map.of("message", "wrong credentials"));
         }
         else {
             return ResponseEntity.ok(Map.of(
                     "message", "login successful",
-                    "username", request.getUsernameRequest().toString()
+                    "username", userService.grapUsernameByEmail(request.getEmailRequest()).toString(),
+                    "email",request.getEmailRequest().toString()
             ));
         }
-
     }
+
 }

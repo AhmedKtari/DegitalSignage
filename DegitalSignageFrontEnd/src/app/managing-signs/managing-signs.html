@@ -1,0 +1,84 @@
+<div class="container-fluid p-0">
+  <div class="row g-0">
+    <!-- sidebar -->
+    <div class="col-md-2 bg-dark text-white min-vh-100">
+      <div class="p-3">
+
+        <h4 class="mb-4" (click)="ShowCreateSignageContent = false; ShowBrowseSignageContent = false">Signs Management</h4>
+
+        <nav class="nav flex-column">
+
+          <a class="nav-link text-white" (click)="ShowCreateSignageContent = !ShowCreateSignageContent; ShowBrowseSignageContent = false">
+            Create Signage
+          </a>
+
+          <a class="nav-link text-white" (click)="ShowBrowseSignageContent = !ShowBrowseSignageContent; ShowCreateSignageContent = false">
+            Browse Signage
+          </a>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- content -->
+    <div class="col-md-10 p-4 min-vh-100" id="content-area">
+     @if(ShowCreateSignageContent || ShowBrowseSignageContent) {
+        <button class="btn btn-secondary mb-3" (click)="ShowCreateSignageContent = false; ShowBrowseSignageContent = false">
+          Back
+        </button>
+        
+      }
+      @else {
+        <h1>Welcome to the Managing Signs Page</h1>
+      <p>This is where you can manage your signs.</p>
+      }
+      
+       
+      @if (ShowCreateSignageContent) {
+       <!-- Sign Creation Area -->
+        <div id="CreateSignageContent">
+          <h2>Create Signage</h2>
+              <div class="form-group">
+                <label for="signageName">Signage Title</label>
+                <input type="text" class="form-control" id="signageName" placeholder="Enter signage title">
+                <label for="signageCategory">Signage Category</label>
+                <input type="text" class="form-control" id="signageCategory" placeholder="Enter signage category">
+                <textarea class="form-control mt-2" id="signageDescription" rows="5" placeholder="Enter signage description"></textarea>
+                <label for="StartingDsate" class="mt-2">Starting Date</label>
+                <input type="date" class="form-control mt-2" id="StartingDate">
+                <label for="EndingDate" class="mt-2">Ending Date</label>
+                <input type="date" class="form-control mt-2" id="EndingDate">
+                <button class="btn btn-primary mt-2" (click)="ShowMedia = !ShowMedia">Show Media</button>
+                @if (ShowMedia) {
+                <div>
+                      Media Will be shown here
+                      <!-- this is an example  -->
+                            <div></div>          
+
+
+
+                      <label for="signageImage" class="mt-2">Upload Media</label>
+                      <input type="file" class="form-control-file mt-2" id="signageImage">
+                      <button class="btn btn-success mt-2" (click)="uploadMedia()">Upload Media</button>
+                  </div>
+                } 
+              </div>
+            
+
+
+
+        </div>
+      }
+       
+      @if (ShowBrowseSignageContent) {
+       <!-- Sign Browse Area -->
+        <div id="BrowseSignageContent">
+          <h2>Browse Signage</h2>
+          <p>Here you can browse existing signage.</p>
+        </div>
+      }
+
+    </div>
+
+  </div>
+</div>

@@ -15,15 +15,14 @@ import { Authservice } from '../Services/authservice';
 })
 export class LoginComponent {
   WrongCredentials = false;
-  username: string = '';
+  email: string = '';
   password: string = '';
   ErrorType: string = '';
   constructor(private router: Router ,
               private authentservice : Authservice
-  ) {
-}
+  ) {}
   async HandleLogin() {
-    if(this.username == '' || this.password == ''){
+    if(this.email == '' || this.password == ''){
       this.WrongCredentials = true;
       this.ErrorType = "Please fill in all fields";
       return;
@@ -33,14 +32,18 @@ export class LoginComponent {
     headers: { 'Content-Type': 'application/json' 
                 
     },
-    body: JSON.stringify({ usernameRequest: this.username, passwordRequest: this.password }) // ← this is the data going TO the backend
+    body: JSON.stringify({ emailRequest: this.email, passwordRequest: this.password }) // ← this is the data going TO the backend
   });
 
   const data = await response.json();
+ alert(data.username)
+  
   if (response.ok) {
-    this.authentservice.authenticate(this.username, this.password);
-    
+    this.authentservice.authenticatedUsername = String(data.username);
+    this.authentservice.authenticate(data.email,data.username);
+
     this.router.navigate(['/profile/' + String(data.username)]);
+    
     
     
   }

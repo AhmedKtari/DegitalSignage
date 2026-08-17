@@ -14,8 +14,7 @@ export class RegisterComponent {
 
   WrongCredentials : boolean = false;
   public ErrorType: string = '';
-  username: string = '';
-  Logpassword: string = '';
+  LogEmail: string = '';
   constructor(
               private authentservice : Authservice,
               private router: Router
@@ -23,19 +22,20 @@ export class RegisterComponent {
   ) {}
 
   async HandleRegister() {
-  console.log('Register button clicked');
+  alert('Register button clicked');
   const name = (document.getElementById('username') as HTMLInputElement).value;
   const email = (document.getElementById('email') as HTMLInputElement).value;
   const password = (document.getElementById('password') as HTMLInputElement).value;
   const confirmPassword = (document.getElementById('confirmpassword') as HTMLInputElement).value;
-  this.username = name;
-  this.Logpassword = password;
+
+  
   if (password !== confirmPassword) {
     console.log('Passwords do not match');
     this.ErrorType = "Passwords do not match";
     this.WrongCredentials = true;
     return ;
   }
+  alert("Passwods match");
   
 
          const response = await fetch
@@ -55,14 +55,14 @@ export class RegisterComponent {
 
   const data = await response.json();
   if (response.ok) {
-    console.log('Registration successful');
-    this.authentservice.authenticate(this.username, this.Logpassword);
+    alert('Registration successful');
+    this.authentservice.authenticate(data.email, data.username);
     this.router.navigate(['/profile/' + String(data.username)]);
+    
   }
   else {
-    console.log('Registration failed: ' + String(data.message));
+    alert('Registration failed: ' + String(data.message));
     this.ErrorType = String(data.message);
-
     this.WrongCredentials = true;
   }
 }

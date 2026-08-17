@@ -17,7 +17,6 @@ export class LogoutComponent {
 
   loggingOut() {
     this.authentservice.logout();
-
     this.authentservice.refreshPage();
     
   }

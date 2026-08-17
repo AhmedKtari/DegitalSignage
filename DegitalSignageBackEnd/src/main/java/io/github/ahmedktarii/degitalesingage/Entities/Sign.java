@@ -20,22 +20,29 @@ public class Sign {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(unique = true)
+    private String signCode;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    @Column(nullable = false, length = 255)
-    private String name;
+    @Column(nullable = false, length = 25 )
+    private String title;
 
-    // Random token used in the public URL
+    @Column(length = 255 )
+    private String Description;
+
+    // Random token used in the public URL ;
     @Column(nullable = false, unique = true, length = 255)
     private String slug;
 
-    @Column(nullable = false, length = 255)
-    private String status;
+    // Online | Offline | disabled ;
+    @Enumerated(EnumType.STRING)
+    private signStatus status;
 
-    @Column(name = "last_seen_at")
-    private Timestamp lastSeenAt;
+    @Column(nullable = false, length = 255)
+    private String type;
 
     @Column(name = "created_at", updatable = false)
     private Timestamp createdAt;

@@ -8,12 +8,18 @@ import { profileComponent } from './profile/profile';
 import { ErrorComponent } from './error/error';
 import { LogoutComponent } from './logout/logout';
 import { RouteGuard } from './Services/route-guard';
+import { ManagingSignsComponent } from './managing-signs/managing-signs';
 
 
 export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
+    },
+    {
+        path: 'profile/:username/:page',
+        component: ManagingSignsComponent,
+        canActivate: [RouteGuard]
     },
     {
         path : 'logout',

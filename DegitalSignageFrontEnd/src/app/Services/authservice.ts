@@ -1,36 +1,48 @@
-import { Service, inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
-@Service()
-
+@Injectable({ providedIn: 'root' })
 export class Authservice {
     private platformId = inject(PLATFORM_ID);
-    public  originalusername: string | null = null;
     private cookieService = inject(SsrCookieService);
-    authenticate(username: string, password: string): boolean {
-    if (username != '' && password != '') {
-      this.cookieService.set('authenticatedUser', username, { path: '/' });
-      return true;
+    public authenticatedUsername: string = '';
+    public authenticatedEmail: string = '';
+
+    constructor() {
+        this.authenticatedEmail = this.cookieService.get('authenticatedUserEmail') || '';
+        this.authenticatedUsername = this.cookieService.get('authenticatedUsername') || '';
     }
-    return false;
-  }
+
+    authenticate(Email: string, Username: string): void {
+        this.cookieService.set('authenticatedUserEmail', Email, { path: '/' });
+        this.cookieService.set('authenticatedUsername', Username, { path: '/' });
+        this.authenticatedEmail = Email;
+        this.authenticatedUsername = Username;
+    }
+
+    getAuthenticatedEmail(): string | null {
+        return this.authenticatedEmail || null;
+    }
 
     isLoggedIn(): boolean {
-    return this.cookieService.check('authenticatedUser');
-  }
+        return this.cookieService.check('authenticatedUserEmail') && this.cookieService.check('authenticatedUsername');
+    }
 
     logout(): void {
-    this.cookieService.delete('authenticatedUser', '/');
-  }
+        this.cookieService.delete('authenticatedUserEmail', '/');
+        this.cookieService.delete('authenticatedUsername', '/');
+        this.authenticatedEmail = '';
+        this.authenticatedUsername = '';
+    }
 
     getAuthenticatedUser(): string | null {
-    return this.cookieService.get('authenticatedUser') || null;
-  }
+        return this.cookieService.get('authenticatedUsername') || null;
+    }
 
     refreshPage(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      window.location.reload();
+        if (isPlatformBrowser(this.platformId)) {
+            window.location.reload();
+        }
     }
-  }
-} 
+}

@@ -22,6 +22,8 @@ public class User {
     private String username;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String userCode;
     @Column
     private String password;
     //  Admin / client
